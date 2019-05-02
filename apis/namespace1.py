@@ -108,7 +108,7 @@ class TodoListPara(Resource):
             logging.info('Could not update TodoTasks')
             users_api.abort(400, e.__doc__, status="Could not save information", statusCode="400")
 
-    @users_api.response(200, 'Department successfully deleted.')
+    @users_api.response(200, 'A task deleted successfully.')
     def delete(self, task_id):
 
         d_task = db.session.query(TodoTasks).filter_by(id=task_id).first()
