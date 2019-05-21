@@ -27,7 +27,7 @@ class TodoList(Resource):
     def get(self):
         params = example_parameters.parse_args()
         is_filter = params.get('is_done_filter')
-        #pprint(is_filter)
+        # pprint(is_filter)
         task_lists = []
         try:
             if is_filter == 'Done':
@@ -50,11 +50,11 @@ class TodoList(Resource):
         try:
             db.session.query(TodoTasks).delete()
             db.session.commit()
-            logging.info('Delete all TodoTasks successfully')
+            logging.info('Delete all TodoTasks successfully.')
             return {"status": "All tasks deleted"}
         except:
             db.session.rollback()
-            logging.info('Could not delete TodoTasks')
+            logging.info('Could not delete TodoTasks.')
             return 404
 
     @users_api.expect(insert_t)
@@ -64,7 +64,7 @@ class TodoList(Resource):
             data = request.json
             db.session.add(TodoTasks(name=data['name'], is_done=data['is_done']))
             db.session.commit()
-            logging.info('Create a TodoTask successfully')
+            logging.info('Create a TodoTask successfully.')
 
             return {
                 "status": "TodoTask added",
@@ -72,21 +72,21 @@ class TodoList(Resource):
                 "is_done": data['is_done']
             }
         except Exception as e:
-            logging.info('Could not create a TodoTask')
-            users_api.abort(400, e.__doc__, status="Could not save information", statusCode="400")
+            logging.info('Could not create a TodoTask.')
+            users_api.abort(400, e.__doc__, status="Could not save information.", statusCode="400")
 
 
 @users_api.route('/<int:task_id>')
 class TodoListPara(Resource):
-    @users_api.response(200, 'Retrieve data successfully')
+    @users_api.response(200, 'Retrieve data successfully.')
     def get(self, task_id):
         one_task = db.session.query(TodoTasks).filter_by(id=task_id).first()
         if one_task:
             data = {'id': one_task.id, 'name': one_task.name, 'is_done': one_task.is_done}
-            logging.info('Retrieve a TodoTask successfully')
+            logging.info('Retrieve a TodoTask successfully.')
             return data
         else:
-            logging.info('Could not retrieve a TodoTask')
+            logging.info('Could not retrieve a TodoTask.')
             return 404
 
     @users_api.expect(insert_t)
@@ -116,8 +116,8 @@ class TodoListPara(Resource):
             # pprint(delete_task)
             db.session.delete(d_task)
             db.session.commit()
-            logging.info('Delete a TodoTask successfully')
+            logging.info('Delete a TodoTask successfully.')
             return {"status": "One Task deleted"}
         else:
-            logging.info('Could not delete the TodoTask')
+            logging.info('Could not delete the TodoTask.')
             return 404
