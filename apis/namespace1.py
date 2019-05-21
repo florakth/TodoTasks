@@ -80,7 +80,7 @@ class TodoList(Resource):
 class TodoListPara(Resource):
     @users_api.response(200, 'Retrieve data successfully.')
     def get(self, task_id):
-        one_task = db.session.query(TodoTasks).filter_by(id=task_id).first()
+        one_task = db.session.query(TodoTasks).get(task_id)
         if one_task:
             data = {'id': one_task.id, 'name': one_task.name, 'is_done': one_task.is_done}
             logging.info('Retrieve a TodoTask successfully.')
@@ -93,7 +93,7 @@ class TodoListPara(Resource):
     @users_api.response(201, 'Update TodoTasks successfully.')
     def put(self, task_id):
         try:
-            one_task = db.session.query(TodoTasks).filter_by(id=task_id).first()
+            one_task = db.session.query(TodoTasks).get(task_id)
             data = request.json
             one_task.name = data['name']
             one_task.is_done = data['is_done']
@@ -111,7 +111,7 @@ class TodoListPara(Resource):
     @users_api.response(200, 'A task deleted successfully.')
     def delete(self, task_id):
 
-        d_task = db.session.query(TodoTasks).filter_by(id=task_id).first()
+        d_task = db.session.query(TodoTasks).get(task_id)
         if d_task:
             # pprint(delete_task)
             db.session.delete(d_task)
