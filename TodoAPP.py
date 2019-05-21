@@ -1,6 +1,6 @@
 # coding=utf-8
-from apis.__init__ import api
-from database.__init__ import create_app
+from apis import api
+from database import create_app
 import logging
 
 __author__ = 'Yuxia'
