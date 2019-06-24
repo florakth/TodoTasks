@@ -1,5 +1,5 @@
 from flask_restplus import Api
-from .namespace1 import users_api as ns1
+from .todo1 import users_api as ns1
 
 api = Api(
     title='Task Management',
